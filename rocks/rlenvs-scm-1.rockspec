@@ -2,7 +2,7 @@ package = "rlenvs"
 version = "scm-1"
 
 source = {
-  url = "git://github.com/Kaixhin/rlenvs.git",
+  url = "git://github.com/nadavbh12/rlenvs.git",
   branch = "master"
 }
 
@@ -28,6 +28,7 @@ build = {
     ["rlenvs.Env"] = "rlenvs/Env.lua",
     ["rlenvs.Acrobot"] = "rlenvs/Acrobot.lua",
     ["rlenvs.Atari"] = "rlenvs/Atari.lua",
+    ["rlenvs.Rle"] = "rlenvs/Rle.lua",
     ["rlenvs.Blackjack"] = "rlenvs/Blackjack.lua",
     ["rlenvs.CartPole"] = "rlenvs/CartPole.lua",
     ["rlenvs.Catch"] = "rlenvs/Catch.lua",
