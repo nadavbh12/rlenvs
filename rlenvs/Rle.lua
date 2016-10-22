@@ -26,7 +26,8 @@ function Rle:_init(opts)
     pool_frms = { -- Defaults to 2-frame mean-pooling
       type = opts.poolFrmsType or 'mean', -- Max captures periodic events e.g. blinking lasers
       size = opts.poolFrmsSize or 2 -- Pools over frames to prevent problems with fixed interval events as above
-    }
+    },
+    env_params = {twoPlayers = opts.twoPlayers or nil}
   }
 
   -- Use ALEWrap and Rle
@@ -36,10 +37,6 @@ function Rle:_init(opts)
   -- Set evaluation mode by default
   self.trainingFlag = false
 
-  -- Full actions mode
---  if opts.fullActions then
---    self.actions = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17}
---  end
   
   -- Life loss = terminal mode
   self.lifeLossTerminal = opts.lifeLossTerminal
@@ -47,7 +44,7 @@ end
 
 -- 1 state returned, of type 'real', of dimensionality 3 x 210 x 160, between 0 and 1
 function Rle:getStateSpec()
-  return {'real', {3, 224, 256}, {0, 1}}
+  return {'real', {3, self.ale:getScreenHeight(), self.ale:getScreenWidth()}, {0, 1}}
 end
 
 -- 1 action required, of type 'int', of dimensionality 1, between 1 and 18 (max)
@@ -57,7 +54,7 @@ end
 
 -- RGB screen of height 224 and width 256
 function Rle:getDisplaySpec()
-  return {'real', {3, 224, 256}, {0, 1}}
+  return {'real', {3, self.ale:getScreenHeight(), self.ale:getScreenWidth()}, {0, 1}}
 end
 
 -- Min and max reward (unknown)
@@ -79,12 +76,13 @@ function Rle:start()
 end
 
 -- Steps in a game
-function Rle:step(action)
+function Rle:step(actionA, actionB)
   -- Map action index to action for game
-  action = self.actions[action]
+  actionA = self.actions[actionA]
+  actionB = self.actions[actionB]
 
   -- Step in the game
-  local screen, reward, terminal = self.gameEnv:step(action, self.trainingFlag)
+  local screen, reward, terminal = self.gameEnv:step(actionA, self.trainingFlag, actionB)
 
   return reward, screen:select(1, 1), terminal
 end
