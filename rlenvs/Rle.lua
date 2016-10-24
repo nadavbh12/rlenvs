@@ -27,7 +27,12 @@ function Rle:_init(opts)
       type = opts.poolFrmsType or 'mean', -- Max captures periodic events e.g. blinking lasers
       size = opts.poolFrmsSize or 2 -- Pools over frames to prevent problems with fixed interval events as above
     },
-    env_params = {twoPlayers = opts.twoPlayers or nil}
+    env_params = {
+      twoPlayers = opts.twoPlayers or nil,
+      mk_p1_char = opts.mk_p1_char or nil,
+      mk_p2_char = opts.mk_p2_char or nil,
+      mk_opponent_char = opts.mk_opponent_char or nil,
+    }
   }
 
   -- Use ALEWrap and Rle
@@ -105,3 +110,4 @@ function Rle:evaluate()
 end
 
 return Rle
+
