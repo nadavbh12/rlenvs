@@ -1,7 +1,7 @@
 local classic = require 'classic'
--- Do not install if ALEWrap missing
-local hasALEWrap, framework = pcall(require, 'alewrap')
-if not hasALEWrap then
+-- Do not install if RLEWrap missing
+local hasRLEWrap, framework = pcall(require, 'rlewrap')
+if not hasRLEWrap then
   return nil
 end
 
@@ -35,7 +35,7 @@ function Rle:_init(opts)
     }
   }
 
-  -- Use ALEWrap and Rle
+  -- Use RLEWrap and Rle
   self.gameEnv = framework.GameEnvironment(options)
   -- Create mapping from action index to action for game
   self.actions = self.gameEnv:getActions()
